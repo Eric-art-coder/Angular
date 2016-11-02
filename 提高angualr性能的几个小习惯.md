@@ -89,11 +89,19 @@ $scope.someMethod = function () {
 
 ### Limit DOM filters
 
-待续...
+当在页面内的模型后面增加filter时,这个会造成当前模型在$digest里运行两次,造成不必要的性能浪费.第一次在$$watchers检测任务改变时;第二次发生在模型值修改时,所以尽量少用内联时的过滤器语法,像下面这样的非常影响页面性能
 
+```
+{{ filter_expression | filter : expression : comparator }}
+```
+推荐使用$filter服务来调用某个过滤器函数在后台,这样能明显的提高页面性能,代码如下
 
+```
+$filter('filter')(array, expression, comparator);
+```
 
-
+## 总结
+上面都是些提高ng项目性能的一些小技巧,虽然ng很强大,但是不规范的代码也会破坏它的性能,所以在写代码之前最好构思下哪些地方是不需要监听器的.
 
 
 
